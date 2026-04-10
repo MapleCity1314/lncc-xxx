@@ -19,6 +19,7 @@ public/videos/*.mp4
 
 # production
 /build
+/.worktrees
 
 # misc
 .DS_Store
