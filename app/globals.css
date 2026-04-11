@@ -8,6 +8,7 @@
   --color-primary-600: #2563eb;
   --color-primary-700: #1d4ed8;
   --color-primary-900: #1e3a8a;
+  --color-accent-400: #38bdf8;
 
   --color-neutral-50: #f8fafc;
   --color-neutral-100: #f1f5f9;
@@ -15,6 +16,18 @@
   --color-neutral-500: #64748b;
   --color-neutral-700: #334155;
   --color-neutral-900: #0f172a;
+
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-foreground: #0f172a;
+  --color-muted-foreground: #64748b;
+  --color-dark-surface: #0f172a;
+  --color-dark-foreground: #e2e8f0;
+  --color-interactive: #2563eb;
+  --color-interactive-strong: #1d4ed8;
+  --color-focus-ring: #38bdf8;
 
   --font-sans: var(--font-alibaba-puhui-sans), 'Noto Sans SC', ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, monospace;
@@ -37,7 +50,7 @@ html {
 
 body {
   min-height: 100vh;
-  background: var(--color-neutral-50);
-  color: var(--color-neutral-900);
+  background: var(--color-background);
+  color: var(--color-foreground);
   font-family: var(--font-sans);
 }

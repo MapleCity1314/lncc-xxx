@@ -253,13 +253,13 @@ Rules:
 
 ```bash
 # Build must pass (required)
-npm run build
+pnpm build
 
 # Type check
 npx tsc --noEmit
 
 # Lint
-npm run lint
+pnpm lint
 ```
 
 **Do not commit with lint errors or TypeScript errors.**
@@ -277,7 +277,7 @@ After completing a task, verify in this order:
 /verification-before-completion
 
 # Step 2: Build must pass
-npm run build
+pnpm build
 # Confirm out/ directory is generated with no errors
 
 # Step 3: Finalize the branch
@@ -305,7 +305,7 @@ closes #<task-id>  (e.g. closes #C-01)
 - [x] Renders paragraphs, bold, italic, links, images correctly
 - [x] Returns null when html is null — no errors
 - [x] No `'use client'` directive
-- [x] `npm run build` passes
+- [x] `pnpm build` passes
 
 ## Screenshots (required for UI changes)
 <!-- Desktop + mobile screenshots -->
@@ -329,7 +329,7 @@ Review focus:
 1. Naming, file size, and Server/Client boundary follow this file
 2. UI/design components were led by `presto-design`
 3. Dynamic route pages export `generateStaticParams`
-4. `npm run build` passes locally on the reviewer's machine
+4. `pnpm build` passes locally on the reviewer's machine
 
 ### 5.4 Merge Standards
 
@@ -343,7 +343,7 @@ Review focus:
 
 ```bash
 # Build
-npm run build
+pnpm build
 # → Generates out/ directory
 
 # Verify locally (simulates Nginx static hosting)
