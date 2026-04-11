@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
-import Footer from '@/components/Footer'
-import Header from '@/components/header'
 import './globals.css'
 
 const alibabaPuHuiSans = localFont({
@@ -22,11 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN" className={`${alibabaPuHuiSans.variable} h-full antialiased`}>
-      <body className="flex min-h-screen flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-      </body>
+      <body className="min-h-full">{children}</body>
     </html>
   )
 }
