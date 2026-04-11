@@ -14,6 +14,23 @@ This version has breaking changes — APIs, conventions, and file structure may 
 
 ---
 
+## 0. Package Management Standard
+
+This project uses **`pnpm` only** for dependency management and script execution.
+
+```bash
+# Install dependencies
+pnpm install
+```
+
+Rules:
+- Do not use `npm install`, `npm run`, or `npx` in this repository.
+- Use `pnpm <script>` for package scripts.
+- Use `pnpm exec <command>` for binaries such as `tsc` or `serve`.
+- Do not commit `package-lock.json`. The lockfile standard is `pnpm-lock.yaml`.
+
+---
+
 ## 1. Skills = Standards
 
 This project uses the Claude Code skills system to standardize collaboration workflows. **All contributors must install the required skills before claiming any task.**
@@ -253,13 +270,13 @@ Rules:
 
 ```bash
 # Build must pass (required)
-npm run build
+pnpm build
 
 # Type check
-npx tsc --noEmit
+pnpm exec tsc --noEmit
 
 # Lint
-npm run lint
+pnpm lint
 ```
 
 **Do not commit with lint errors or TypeScript errors.**
@@ -277,7 +294,7 @@ After completing a task, verify in this order:
 /verification-before-completion
 
 # Step 2: Build must pass
-npm run build
+pnpm build
 # Confirm out/ directory is generated with no errors
 
 # Step 3: Finalize the branch
@@ -305,7 +322,7 @@ closes #<task-id>  (e.g. closes #C-01)
 - [x] Renders paragraphs, bold, italic, links, images correctly
 - [x] Returns null when html is null — no errors
 - [x] No `'use client'` directive
-- [x] `npm run build` passes
+- [x] `pnpm build` passes
 
 ## Screenshots (required for UI changes)
 <!-- Desktop + mobile screenshots -->
@@ -329,7 +346,7 @@ Review focus:
 1. Naming, file size, and Server/Client boundary follow this file
 2. UI/design components were led by `presto-design`
 3. Dynamic route pages export `generateStaticParams`
-4. `npm run build` passes locally on the reviewer's machine
+4. `pnpm build` passes locally on the reviewer's machine
 
 ### 5.4 Merge Standards
 
@@ -343,11 +360,11 @@ Review focus:
 
 ```bash
 # Build
-npm run build
+pnpm build
 # → Generates out/ directory
 
 # Verify locally (simulates Nginx static hosting)
-npx serve out
+pnpm exec serve out
 
 # Upload to server
 scp -r out/ user@server:/var/www/lncc/
