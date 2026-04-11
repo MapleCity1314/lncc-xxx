@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
+import Footer from '@/components/Footer'
 import Header from '@/components/header'
 import './globals.css'
 
@@ -24,6 +25,7 @@ export default function RootLayout({
       <body className="flex min-h-screen flex-col">
         <Header />
         <main className="flex-1">{children}</main>
+        <Footer />
       </body>
     </html>
   )
