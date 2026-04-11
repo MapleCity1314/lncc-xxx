@@ -16,15 +16,15 @@
   --color-neutral-700: #334155;
   --color-neutral-900: #0f172a;
 
-  --font-sans: var(--font-geist-sans), 'Noto Sans SC', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-sans: var(--font-alibaba-puhui-sans), 'Noto Sans SC', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, monospace;
 
   --spacing-section: 4rem;
   --spacing-card: 1.5rem;
 }
 
 html {
-  scroll-padding-top: 84px;
+  scroll-padding-top: 104px;
 }
 
 body {

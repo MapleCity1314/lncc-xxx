@@ -9,7 +9,7 @@ type SearchButtonProps = {
 
 export default function SearchButton({
   className,
-  href = '/search',
+  href,
   label = '搜索',
   onClick,
 }: SearchButtonProps) {
@@ -44,12 +44,7 @@ export default function SearchButton({
   }
 
   return (
-    <button
-      type="button"
-      aria-label={label}
-      onClick={onClick}
-      className={classes}
-    >
+    <button type="button" aria-label={label} onClick={onClick} className={classes}>
       {icon}
     </button>
   )

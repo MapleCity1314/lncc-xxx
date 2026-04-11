@@ -1,3 +1,4 @@
+// header-links.ts
 export type HeaderLink = {
   href: string
   label: string
@@ -7,7 +8,6 @@ export function isHeaderLinkActive(pathname: string, href: string) {
   if (href === '/') {
     return pathname === '/'
   }
-
   return pathname === href || pathname.startsWith(`${href}/`)
 }
 
