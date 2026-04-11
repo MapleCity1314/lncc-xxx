@@ -8,7 +8,10 @@ export default function Footer() {
       <div className="mx-auto w-full max-w-[1440px] px-4 py-16 sm:px-6 lg:px-10 lg:py-20">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-8">
           <div className="flex flex-col gap-8 lg:col-span-5 xl:col-span-4">
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-center lg:flex-col lg:items-start xl:flex-row">
+            <div
+              data-testid="footer-logo-stack"
+              className="flex flex-col items-start gap-5"
+            >
               <Image
                 src={siteSettings.footerLogos.primary}
                 alt="辽宁交专标识"
@@ -16,26 +19,25 @@ export default function Footer() {
                 height={120}
                 className="h-16 w-auto object-contain sm:h-20"
               />
-              <div className="hidden h-12 w-px bg-white/10 sm:block lg:hidden xl:block" />
               <Image
                 src={siteSettings.footerLogos.secondary}
                 alt="信息工程系标识"
                 width={400}
                 height={120}
-                className="h-10 w-auto object-contain sm:h-12"
+                className="h-10 w-auto max-w-full object-contain sm:h-12"
               />
             </div>
 
             <div className="space-y-3 text-sm leading-relaxed text-slate-400">
-              <p className="flex items-start gap-3">
+              <p className="flex flex-col gap-1 sm:flex-row sm:items-start sm:gap-3">
                 <span className="min-w-[48px] text-slate-500">地址</span>
                 <span>{siteSettings.address}</span>
               </p>
-              <p className="flex items-start gap-3">
+              <p className="flex flex-col gap-1 sm:flex-row sm:items-start sm:gap-3">
                 <span className="min-w-[48px] text-slate-500">邮编</span>
                 <span>{siteSettings.postalCode}</span>
               </p>
-              <p className="flex items-start gap-3">
+              <p className="flex flex-col gap-1 sm:flex-row sm:items-start sm:gap-3">
                 <span className="min-w-[48px] text-slate-500">电话</span>
                 <span>{siteSettings.telephone}</span>
               </p>
@@ -66,7 +68,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col items-center justify-between border-t border-white/10 pt-8 sm:flex-row sm:gap-4 lg:mt-24">
+        <div className="mt-16 flex flex-col items-center justify-between border-t border-white/10 pt-8 text-center sm:flex-row sm:gap-4 sm:text-left lg:mt-24">
           <p className="text-xs text-slate-500">
             {siteSettings.footerCopyright}
           </p>

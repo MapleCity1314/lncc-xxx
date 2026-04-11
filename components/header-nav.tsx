@@ -43,14 +43,14 @@ export default function HeaderNav() {
         clearProps: 'willChange',
       })
     },
-    { scope: navRef, dependencies: [pathname] }
+    { scope: navRef, dependencies: [pathname] },
   )
 
   return (
     <nav
       ref={navRef}
       aria-label="主导航"
-      className="hidden items-center gap-4 whitespace-nowrap xl:flex 2xl:gap-5"
+      className="hidden items-center gap-5 whitespace-nowrap xl:flex 2xl:gap-6"
     >
       {headerLinks.map((item) => {
         const active = isHeaderLinkActive(pathname, item.href)
@@ -62,7 +62,7 @@ export default function HeaderNav() {
                 href={item.href}
                 aria-current={active ? 'page' : undefined}
                 className={[
-                  'relative block py-2 text-[14px] font-semibold tracking-[0.03em] transition-colors',
+                  'relative block py-2 text-[clamp(0.98rem,0.46vw+0.82rem,1.15rem)] font-semibold tracking-[0.04em] transition-colors',
                   active ? 'text-white' : 'text-white/80 hover:text-white',
                 ].join(' ')}
               >

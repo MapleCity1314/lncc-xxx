@@ -50,6 +50,17 @@ describe('Footer', () => {
     expect(screen.getByAltText('信息工程系标识')).toBeInTheDocument()
   })
 
+  it('renders the footer logos in a dedicated vertical stack container', () => {
+    render(<Footer />)
+
+    const logoStack = screen.getByTestId('footer-logo-stack')
+
+    expect(logoStack).toBeInTheDocument()
+    expect(logoStack.className).toContain('flex-col')
+    expect(logoStack.className).toContain('items-start')
+    expect(logoStack.querySelectorAll('img')).toHaveLength(2)
+  })
+
   it('renders all quick links from site settings', () => {
     render(<Footer />)
 

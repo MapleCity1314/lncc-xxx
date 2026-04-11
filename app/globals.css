@@ -23,8 +23,16 @@
   --spacing-card: 1.5rem;
 }
 
+:root {
+  --header-height: clamp(5.75rem, 5.05rem + 1.9vw, 7.5rem);
+  --page-gutter: clamp(1rem, 1.5vw + 0.65rem, 2.5rem);
+  --content-max-width: 96rem;
+  --section-space: clamp(3.5rem, 6vw, 7rem);
+  --hero-min-height: clamp(34rem, 72vh, 50rem);
+}
+
 html {
-  scroll-padding-top: 104px;
+  scroll-padding-top: var(--header-height);
 }
 
 body {
