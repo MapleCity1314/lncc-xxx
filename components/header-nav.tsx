@@ -19,25 +19,23 @@ export default function HeaderNav() {
       const items = gsap.utils.toArray<HTMLElement>('.gsap-nav-reveal')
 
       if (prefersReducedMotion) {
-        gsap.set(items, { clearProps: 'all', opacity: 1, yPercent: 0 })
+        gsap.set(items, { clearProps: 'all', opacity: 1 })
         return
       }
 
       gsap.set(items, {
-        yPercent: 120,
         opacity: 0,
-        willChange: 'transform, opacity',
+        willChange: 'opacity',
       })
 
       const timeline = gsap.timeline({
         defaults: {
           duration: 0.9,
-          ease: 'power4.out',
+          ease: 'power3.out',
         },
       })
 
       timeline.to(items, {
-        yPercent: 0,
         opacity: 1,
         stagger: 0.08,
         clearProps: 'willChange',
@@ -56,55 +54,37 @@ export default function HeaderNav() {
         const active = isHeaderLinkActive(pathname, item.href)
 
         return (
-          <div key={item.href} className="group/item relative py-1">
-            <div className="overflow-hidden">
-              <div className="gsap-nav-reveal">
-                <Link
-                  href={item.href}
-                  aria-current={active ? 'page' : undefined}
+          <div key={item.href} className="group relative py-2">
+            <div className="gsap-nav-reveal">
+              <Link
+                href={item.href}
+                aria-current={active ? 'page' : undefined}
+                className={[
+                  'relative block py-1 text-[clamp(0.98rem,0.46vw+0.82rem,1.15rem)] font-semibold tracking-[0.04em] transition-colors',
+                  active ? 'text-white' : 'text-white/80 hover:text-white',
+                ].join(' ')}
+              >
+                {item.label}
+                <span
+                  aria-hidden="true"
                   className={[
-                    'peer/item group/link relative flex items-center gap-1.5 py-2 text-[clamp(0.98rem,0.46vw+0.82rem,1.15rem)] font-semibold tracking-[0.04em] transition-colors',
-                    active ? 'text-white' : 'text-white/80 hover:text-white',
+                    'absolute inset-x-0 -bottom-1 h-px rounded-full bg-sky-400 transition-opacity',
+                    active ? 'opacity-100' : 'opacity-0',
                   ].join(' ')}
-                >
-                  <span>{item.label}</span>
-                  {item.children.length > 0 ? (
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 12 12"
-                      className="mt-px size-3 text-sky-200/80 transition-transform duration-200 group-hover/link:translate-y-0.5 group-focus-within/item:translate-y-0.5"
-                    >
-                      <path
-                        d="M2.25 4.5 6 8.25 9.75 4.5"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="1.4"
-                      />
-                    </svg>
-                  ) : null}
-                  <span
-                    aria-hidden="true"
-                    className={[
-                      'absolute inset-x-0 -bottom-0.5 h-px rounded-full bg-sky-400 transition-opacity',
-                      active ? 'opacity-100' : 'opacity-0',
-                    ].join(' ')}
-                  />
-                </Link>
-              </div>
+                />
+              </Link>
             </div>
 
-            {item.children.length > 0 ? (
-              <div className="absolute left-0 top-full z-20 min-w-full pt-0">
-                <div className="pointer-events-none translate-y-1 bg-white opacity-0 transition-all duration-150 ease-out peer-hover/item:pointer-events-auto peer-hover/item:translate-y-0 peer-hover/item:opacity-100 hover:pointer-events-auto hover:translate-y-0 hover:opacity-100 group-focus-within/item:pointer-events-auto group-focus-within/item:translate-y-0 group-focus-within/item:opacity-100">
+            {item.children && item.children.length > 0 ? (
+              <div className="absolute left-0 top-full z-20 invisible origin-top-left -translate-y-2 scale-95 pt-3 opacity-0 transition-all duration-300 ease-out group-hover:visible group-hover:translate-y-0 group-hover:scale-100 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:scale-100 group-focus-within:opacity-100">
+                <div className="flex w-max min-w-[150px] flex-col rounded-2xl bg-white/95 p-1.5 shadow-xl ring-1 ring-black/5 backdrop-blur-md">
                   {item.children.map((child) => (
                     <Link
                       key={`${item.href}:${child.label}`}
                       href={child.href}
                       target={child.isExternal ? '_blank' : undefined}
                       rel={child.isExternal ? 'noreferrer noopener' : undefined}
-                      className="flex min-h-10 items-center whitespace-nowrap px-4 py-2 text-[clamp(0.98rem,0.46vw+0.82rem,1.15rem)] font-medium tracking-[0.04em] text-black transition-colors duration-150 hover:bg-slate-100 focus-visible:bg-slate-100 focus-visible:outline-none"
+                      className="block rounded-xl px-4 py-2.5 text-[15px] font-medium text-slate-700 transition-colors duration-200 hover:bg-slate-100 hover:text-sky-600 focus-visible:bg-slate-100 focus-visible:text-sky-600 focus-visible:outline-none"
                     >
                       {child.label}
                     </Link>

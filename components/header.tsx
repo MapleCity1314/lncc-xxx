@@ -15,7 +15,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="absolute inset-x-0 top-0 z-50">
+      <header className="fixed inset-x-0 top-0 z-50">
         <div className="pointer-events-none absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-black/40 via-black/16 to-transparent" />
 
         <div className="relative mx-auto flex h-[var(--header-height)] w-full max-w-[min(100%,1680px)] items-center justify-between gap-6 px-5 sm:px-8 lg:px-12 2xl:px-16">

@@ -177,17 +177,22 @@ describe('HeaderNav', () => {
     ])
   })
 
-  it('only opens submenu from the root link hover target, not the hidden panel area', () => {
+  it('keeps submenu hidden until the root navigation group is hovered or focused', () => {
     const { container } = render(<HeaderNav />)
 
-    const rootLink = screen
-      .getAllByRole('link', { name: '专业设置' })
-      .find((element) => element.className.includes('peer/item'))
-    const submenuPanel = container.querySelector('.absolute.left-0.top-full.z-20.min-w-full.pt-0')
+    const rootLink = Array.from(
+      container.querySelectorAll<HTMLAnchorElement>('.gsap-nav-reveal > a'),
+    ).find((element) => element.textContent === '专业设置')
+    const submenuPanel = container.querySelector(
+      '.absolute.left-0.top-full.z-20.invisible',
+    )
     const submenuSurface = submenuPanel?.firstElementChild
 
-    expect(rootLink?.className).toContain('peer/item')
-    expect(submenuSurface?.className).toContain('peer-hover/item:pointer-events-auto')
-    expect(submenuSurface?.className).not.toContain('group-hover/item:pointer-events-auto')
+    expect(rootLink?.className).toContain('relative block')
+    expect(submenuPanel?.className).toContain('group-hover:visible')
+    expect(submenuPanel?.className).toContain('group-focus-within:visible')
+    expect(submenuPanel?.className).toContain('opacity-0')
+    expect(submenuPanel?.className).toContain('group-hover:opacity-100')
+    expect(submenuSurface?.className).toContain('bg-white/95')
   })
 })

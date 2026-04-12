@@ -53,10 +53,11 @@ export default function HomeHero() {
   return (
     <section className="relative w-full bg-white">
       {/* 1. 上半部分：大 Banner 区 */}
-      <div className="relative h-[82dvh] w-full overflow-hidden shadow-2xl">
+      <div data-home-hero="shell" className="relative h-[82dvh] w-full overflow-hidden shadow-2xl">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeIndex}
+            data-home-hero="slide"
             className="absolute inset-0"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -142,9 +143,9 @@ export default function HomeHero() {
       </div>
 
       {/* 2. 下半部分：白色背景统计区 */}
-      <div className="relative z-20 bg-white py-24">
+      <div data-home-hero="stats" className="relative z-20 bg-white py-24">
         <div className="mx-auto max-w-7xl px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
+          <div data-home-hero="stats-grid" className="-mt-16 grid grid-cols-1 gap-16 md:grid-cols-3">
             <div className="group text-center">
               <div className="text-5xl font-bold text-slate-900 transition-colors group-hover:text-sky-600">
                 <Counter value={40} suffix="+" />
