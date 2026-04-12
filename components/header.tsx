@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useReducedMotion } from 'framer-motion'
+import { withBasePath } from '@/app/(frontend)/_lib/base-path'
 import HeaderNav from '@/components/header-nav'
 import MobileMenu from '@/components/mobile-menu'
 import SearchButton from '@/components/search-button'
@@ -34,7 +35,7 @@ export default function Header() {
           >
             <Link href="/" aria-label="信息工程系首页" className="block">
               <Image
-                src="/image/logo/logo.png"
+                src={withBasePath('/image/logo/logo.png')}
                 alt="信息工程系标识"
                 width={1855}
                 height={576}

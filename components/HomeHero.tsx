@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react'
 import Image from 'next/image'
 import { AnimatePresence, motion, useInView, useSpring, useTransform } from 'framer-motion'
+import { withBasePath } from '@/app/(frontend)/_lib/base-path'
 
 const heroEase: [number, number, number, number] = [0.21, 1, 0.36, 1]
 
@@ -65,7 +66,7 @@ export default function HomeHero() {
             transition={{ duration: 1.2 }}
           >
             <Image
-              src={slides[activeIndex].src}
+              src={withBasePath(slides[activeIndex].src)}
               alt={slides[activeIndex].alt}
               fill
               priority={activeIndex === 0}

@@ -1,5 +1,6 @@
 ﻿import Image from 'next/image'
 import Link from 'next/link'
+import { withBasePath } from '@/app/(frontend)/_lib/base-path'
 import siteSettings from '@/data/siteSettings'
 
 export default function Footer() {
@@ -13,14 +14,14 @@ export default function Footer() {
               className="flex flex-col items-start gap-5"
             >
               <Image
-                src={siteSettings.footerLogos.primary}
+                src={withBasePath(siteSettings.footerLogos.primary)}
                 alt="辽宁交专标识"
                 width={120}
                 height={120}
                 className="h-16 w-auto object-contain sm:h-20"
               />
               <Image
-                src={siteSettings.footerLogos.secondary}
+                src={withBasePath(siteSettings.footerLogos.secondary)}
                 alt="信息工程系标识"
                 width={400}
                 height={120}
