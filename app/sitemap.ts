@@ -2,6 +2,8 @@ import type { MetadataRoute } from 'next'
 import { getAbsoluteUrl } from '@/app/(frontend)/_lib/metadata'
 import { majorDetailEntries, newsDetailEntries } from '@/app/(frontend)/_lib/route-placeholders'
 
+export const dynamic = 'force-static'
+
 const STATIC_ROUTES = [
   '/',
   '/about',
