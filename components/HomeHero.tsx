@@ -67,7 +67,9 @@ export default function HomeHero() {
               src={slides[activeIndex].src}
               alt={slides[activeIndex].alt}
               fill
-              priority
+              priority={activeIndex === 0}
+              sizes="100vw"
+              loading={activeIndex === 0 ? 'eager' : 'lazy'}
               className="object-cover"
             />
             {/* 更加细腻的渐变，确保文字可读性 */}
