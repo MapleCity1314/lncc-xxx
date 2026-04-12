@@ -130,19 +130,50 @@ export default function MobileMenu({ onSearchClick }: MobileMenuProps) {
                       variants={itemVariants}
                       className="[transform-origin:top_center]"
                     >
-                      <Link
-                        href={item.href}
-                        aria-current={active ? 'page' : undefined}
-                        onClick={() => setOpen(false)}
+                      <div
                         className={[
-                          'block rounded-2xl px-4 py-4 text-[22px] font-bold tracking-[0.02em] transition-colors',
+                          'rounded-[1.75rem] border px-3 py-3',
                           active
-                            ? 'bg-white/10 text-white'
-                            : 'text-white/86 hover:bg-white/8 hover:text-white',
+                            ? 'border-white/14 bg-white/10'
+                            : 'border-white/8 bg-white/[0.03]',
                         ].join(' ')}
                       >
-                        {item.label}
-                      </Link>
+                        <Link
+                          href={item.href}
+                          aria-current={active ? 'page' : undefined}
+                          onClick={() => setOpen(false)}
+                          className={[
+                            'flex min-h-11 items-center justify-between rounded-2xl px-3 py-3 text-[22px] font-bold tracking-[0.02em] transition-colors',
+                            active
+                              ? 'text-white'
+                              : 'text-white/86 hover:bg-white/8 hover:text-white',
+                          ].join(' ')}
+                        >
+                          <span>{item.label}</span>
+                          {item.children.length > 0 ? (
+                            <span className="text-xs font-medium uppercase tracking-[0.28em] text-sky-200/60">
+                              {String(item.children.length).padStart(2, '0')}
+                            </span>
+                          ) : null}
+                        </Link>
+
+                        {item.children.length > 0 ? (
+                          <div className="mt-2 grid gap-1.5 pb-1">
+                            {item.children.map((child) => (
+                              <Link
+                                key={`${item.href}:${child.label}`}
+                                href={child.href}
+                                target={child.isExternal ? '_blank' : undefined}
+                                rel={child.isExternal ? 'noreferrer noopener' : undefined}
+                                onClick={() => setOpen(false)}
+                                className="flex min-h-11 items-center rounded-2xl px-3 py-3 text-base font-medium text-white/72 transition hover:bg-white/8 hover:text-white"
+                              >
+                                {child.label}
+                              </Link>
+                            ))}
+                          </div>
+                        ) : null}
+                      </div>
                     </motion.div>
                   )
                 })}
