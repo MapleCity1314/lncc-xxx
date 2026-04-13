@@ -15,7 +15,7 @@ export function buildSpecializationMenu(
   section: SectionContent,
   currentPath: string,
 ): SubPageMenuItem[] {
-  const specializationCategory = section.categories.find((node) => node.slug === 'specializations')
+  const specializationCategory = getSpecializationCategory(section)
   if (!specializationCategory) {
     return []
   }
@@ -26,15 +26,30 @@ export function buildSpecializationMenu(
     href: `/${section.slug}/${specializationCategory.slug}/${entry.slug}`,
   }))
 
-  items.push({
-    label: '计算机基础教研室',
-    href: `/${section.slug}`,
-  })
-
   return items.map((item) => ({
     ...item,
-    isActive: currentPath !== `/${section.slug}` && currentPath === item.href,
+    isActive: currentPath === item.href,
   }))
+}
+
+export function getSpecializationCategory(section: SectionContent) {
+  return section.categories.find((node) => node.slug === 'specializations')
+}
+
+export function getSpecializationLandingPath(section: SectionContent) {
+  const specializationCategory = getSpecializationCategory(section)
+  const landingEntrySlug = section.landingEntrySlug
+
+  if (!specializationCategory || !landingEntrySlug) {
+    return undefined
+  }
+
+  const entry = specializationCategory.entries?.find((item) => item.slug === landingEntrySlug)
+  if (!entry) {
+    return undefined
+  }
+
+  return `/${section.slug}/${specializationCategory.slug}/${entry.slug}`
 }
 
 function isMenuItemActive(href: string, currentPath: string) {

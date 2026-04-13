@@ -1,7 +1,7 @@
 import type { MockCollection, MockPage } from '@/mock/types'
 
 const data = {
-  section: "教研科研入口",
+  section: "教研科研",
   description: "教研科研栏目入口页。",
   items: [
     {

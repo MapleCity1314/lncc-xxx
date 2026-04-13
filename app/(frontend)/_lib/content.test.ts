@@ -3,6 +3,7 @@ import type { SectionContent } from '@/data/content/types'
 import {
   buildSpecializationMenu,
   buildSiblingMenu,
+  getSpecializationLandingPath,
   getAllSectionStaticParams,
   resolveSectionPath,
 } from '@/app/(frontend)/_lib/content'
@@ -92,15 +93,31 @@ describe('shared section tree routing', () => {
 })
 
 describe('majors section routing', () => {
-  it('keeps the existing majors landing page labels unchanged', () => {
+  it('keeps the majors landing route explicitly mapped to a specialization entry', () => {
     expect(majorsSection.hero.title).toBe('人才培养')
-    expect(majorsSection.sidebar.title).toBe('专业建设')
+    expect(majorsSection.sidebar.title).toBe('专业设置')
     expect(majorsSection.breadcrumbs.at(-1)?.label).toBe('人才培养')
+    expect(getSpecializationLandingPath(majorsSection)).toBe(
+      '/majors/specializations/zysz-jsjwljs-htm',
+    )
   })
 
-  it('does not select the final specialization item for the majors landing page', () => {
-    const specializationMenu = buildSpecializationMenu(majorsSection, '/majors')
+  it('marks the configured specialization as active on the majors landing page', () => {
+    const landingPath = getSpecializationLandingPath(majorsSection)
 
-    expect(specializationMenu.some((item) => item.isActive)).toBe(false)
+    expect(landingPath).toBe('/majors/specializations/zysz-jsjwljs-htm')
+
+    const specializationMenu = buildSpecializationMenu(
+      majorsSection,
+      landingPath!,
+    )
+
+    expect(
+      specializationMenu.find((item) => item.href === '/majors/specializations/zysz-jsjwljs-htm')
+        ?.isActive,
+    ).toBe(true)
+    expect(
+      specializationMenu.some((item) => item.label === '计算机基础教研室'),
+    ).toBe(false)
   })
 })

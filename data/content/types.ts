@@ -59,6 +59,7 @@ export type ContentCategory = {
 
 export type SectionContent = {
   slug: string
+  landingEntrySlug?: string
   hero: {
     title: string
     subtitle: string

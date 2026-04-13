@@ -361,14 +361,14 @@ const programGroupsCategory: ContentCategory = {
 
 const courseDevelopmentCategory: ContentCategory = {
   slug: 'course-development',
-  title: '课程群数字化',
+  title: '课程体系建设',
   description: '课程与实践融合、数字教材、实训虚拟机与 AI 助教组成完整闭环。',
   entries: [curriculumEntry],
 }
 
 const teachingAchievementCategory: ContentCategory = {
   slug: 'teaching-achievement',
-  title: '教学成果治理',
+  title: '成果展示与评价',
   description: '构建成果展演、企业评审与数据驱动评价，让成果经得起行业检验。',
   entries: [teachingEntry],
 }
@@ -382,20 +382,21 @@ const programConstructionCategory: ContentCategory = {
 
 const specializationCategory: ContentCategory = {
   slug: 'specializations',
-  title: '专业方向',
+  title: '专业列表',
   description: '紧贴计算机类专业方向，涵盖网络、软件、云计算与数字媒体实践。',
   entries: majorEntries,
 }
 export const majorsSection: SectionContent = {
   slug: 'majors',
+  landingEntrySlug: 'zysz-jsjwljs-htm',
   hero: {
     title: '人才培养',
     subtitle: 'PROGRAM CONSTRUCTION',
     image: '/image/banner/home-banner-3.jpg',
   },
   sidebar: {
-    title: '专业建设',
-    subtitle: 'Program Construction',
+    title: '专业设置',
+    subtitle: 'Specialization Directory',
   },
   menu: [
     { label: '专业建设', enLabel: 'Program Construction', href: '/majors/program-construction' },

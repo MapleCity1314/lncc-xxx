@@ -9,6 +9,7 @@ import enrollmentEmploymentLinks from '@/mock/enrollment/employmentLinks'
 import enrollmentEmploymentServices from '@/mock/enrollment/employmentServices'
 import enrollmentEnterpriseVisits from '@/mock/enrollment/enterpriseVisits'
 import enrollmentLanding from '@/mock/enrollment/landing'
+import employmentArticles from '@/mock/index/career'
 import majorsLab from '@/mock/majors/lab'
 import majorsLanding from '@/mock/majors/landing'
 import majorsPrograms from '@/mock/majors/programs'
@@ -23,6 +24,7 @@ import researchPapers from '@/mock/research/papers'
 import researchProjects from '@/mock/research/researchProjects'
 import researchTeachingProjects from '@/mock/research/teachingProjects'
 import researchTextbooks from '@/mock/research/textbooks'
+import partyArticles from '@/mock/index/party'
 import teachersDoctors from '@/mock/teachers/doctors'
 import teachersFaculty from '@/mock/teachers/faculty'
 import teachersLanding from '@/mock/teachers/landing'
@@ -202,6 +204,28 @@ export const pageContent = {
       href: `/news/${item.slug}`,
       label: item.title,
       description: '新闻详情静态参数样例',
+    })),
+  },
+  party: {
+    title: '党团建设',
+    routePath: '/party',
+    summary: '首页党团模块已接入站内详情页。',
+    mockSources: ['@/mock/index/party.ts'],
+    sampleLinks: partyArticles.items.slice(0, 3).map((item) => ({
+      href: `/party/${item.slug}`,
+      label: item.title,
+      description: '党团详情静态参数样例',
+    })),
+  },
+  employment: {
+    title: '产教融合与就业',
+    routePath: '/employment',
+    summary: '首页产教与就业模块已接入站内详情页。',
+    mockSources: ['@/mock/index/career.ts'],
+    sampleLinks: employmentArticles.items.slice(0, 3).map((item) => ({
+      href: `/employment/${item.slug}`,
+      label: item.title,
+      description: '产教就业详情静态参数样例',
     })),
   },
 } as const

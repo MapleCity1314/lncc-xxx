@@ -20,10 +20,6 @@ const specializationLinks: HeaderSubLink[] =
     label: entry.title,
     href: `/${majorsSection.slug}/${specializationCategory.slug}/${entry.slug}`,
   })) ?? []
-const majorsDropdownChildren: HeaderSubLink[] = [
-  ...specializationLinks,
-  { href: '/majors', label: '计算机基础教研室' },
-]
 
 export function isHeaderLinkActive(pathname: string, href: string) {
   if (href === '/') {
@@ -51,7 +47,7 @@ const headerLinks: HeaderLink[] = [
   {
     href: '/majors',
     label: '专业设置',
-    children: majorsDropdownChildren,
+    children: specializationLinks,
   },
   {
     href: '/teachers',
