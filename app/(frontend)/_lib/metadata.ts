@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import type { MockPage } from '@/mock/types'
 import { pageContent } from './route-placeholders'
 
 const SITE_TITLE = '辽宁交专信息工程系'
@@ -11,7 +10,7 @@ const TWITTER_HANDLE = '@lncc_info'
 const TITLE_SUFFIX = 'LNCC'
 const HOME_PAGE_TITLE = '首页标题'
 
-type SectionRoute = keyof typeof pageContent
+export type SectionRoute = keyof typeof pageContent
 export type DetailSection = 'news' | 'majors'
 
 type BuildMetadataOptions = {
@@ -22,6 +21,15 @@ type BuildMetadataOptions = {
   sectionLabel?: string
   openGraphExtras?: Partial<Metadata['openGraph']>
   twitterExtras?: Partial<Metadata['twitter']>
+}
+
+type ContentEntryMetadataOptions = {
+  title: string
+  description?: string
+  path: string
+  imagePath?: string
+  sectionLabel?: string
+  publishedAt?: string
 }
 
 function normalizeRoute(route: string) {
@@ -39,22 +47,6 @@ function resolveShareImage(imagePath?: string) {
 
   const normalized = (imagePath ?? DEFAULT_IMAGE_PATH).replace(/^\/+/, '')
   return new URL(normalized, SITE_BASE_URL).href
-}
-
-function getEntryDescription(entry: MockPage) {
-  if (entry.excerpt?.trim()) {
-    return entry.excerpt
-  }
-
-  if (entry.paragraphs.length > 0) {
-    return entry.paragraphs[0]
-  }
-
-  if (entry.body?.trim()) {
-    return entry.body.trim().slice(0, 140)
-  }
-
-  return SITE_DESCRIPTION
 }
 
 function buildMetadata(options: BuildMetadataOptions): Metadata {
@@ -112,24 +104,21 @@ export function getSectionMetadata(section: SectionRoute): Metadata {
   })
 }
 
-export function getDetailMetadata(section: DetailSection, entry: MockPage): Metadata {
-  const routePrefix = section === 'news' ? 'news' : 'majors'
-  const title = entry.title
-  const description = getEntryDescription(entry)
+export function getContentEntryMetadata(options: ContentEntryMetadataOptions) {
   const openGraphExtras: Partial<Metadata['openGraph']> = {
     type: 'article',
   }
 
-  if (entry.publishedAt) {
-    openGraphExtras.publishedTime = entry.publishedAt
+  if (options.publishedAt) {
+    openGraphExtras.publishedTime = options.publishedAt
   }
 
   return buildMetadata({
-    title,
-    description,
-    path: `${routePrefix}/${entry.slug}`,
-    imagePath: entry.images?.[0]?.url,
-    sectionLabel: routePrefix,
+    title: options.title,
+    description: options.description?.trim() ? options.description : SITE_DESCRIPTION,
+    path: options.path,
+    imagePath: options.imagePath,
+    sectionLabel: options.sectionLabel,
     openGraphExtras,
   })
 }

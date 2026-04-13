@@ -1,3 +1,5 @@
+import { majorsSection } from '@/data/content'
+
 export type HeaderSubLink = {
   href: string
   label: string
@@ -9,6 +11,19 @@ export type HeaderLink = {
   href: string
   label: string
 }
+
+const specializationCategory = majorsSection.categories.find(
+  (category) => category.slug === 'specializations',
+)
+const specializationLinks: HeaderSubLink[] =
+  specializationCategory?.entries?.map((entry) => ({
+    label: entry.title,
+    href: `/${majorsSection.slug}/${specializationCategory.slug}/${entry.slug}`,
+  })) ?? []
+const majorsDropdownChildren: HeaderSubLink[] = [
+  ...specializationLinks,
+  { href: '/majors', label: '计算机基础教研室' },
+]
 
 export function isHeaderLinkActive(pathname: string, href: string) {
   if (href === '/') {
@@ -36,16 +51,7 @@ const headerLinks: HeaderLink[] = [
   {
     href: '/majors',
     label: '专业设置',
-    children: [
-      { href: '/majors/zysz-jsjwljs-htm', label: '计算机网络技术' },
-      { href: '/majors/zysz-rjjs-htm', label: '软件技术' },
-      { href: '/majors/zysz-rjjs-rjcs-htm', label: '软件技术（软件测试）' },
-      { href: '/majors/zysz-yjsjsyy-htm', label: '云计算技术应用' },
-      { href: '/majors/zysz-rgznjsyy-htm', label: '人工智能技术应用' },
-      { href: '/majors/zysz-szmtjs-htm', label: '数字媒体技术' },
-      { href: '/majors/zysz-ysdh-htm', label: '影视动画' },
-      { href: '/majors', label: '计算机基础教研室' },
-    ],
+    children: majorsDropdownChildren,
   },
   {
     href: '/teachers',
