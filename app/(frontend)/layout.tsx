@@ -1,4 +1,5 @@
 import Footer from '@/components/Footer'
+import FooterQuickLinks from '@/components/FooterQuickLinks'
 import Header from '@/components/header'
 
 type FrontendLayoutProps = Readonly<{
@@ -10,6 +11,7 @@ export default function FrontendLayout({ children }: FrontendLayoutProps) {
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1">{children}</main>
+      <FooterQuickLinks />
       <Footer />
     </div>
   )

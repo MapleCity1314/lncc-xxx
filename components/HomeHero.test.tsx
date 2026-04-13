@@ -8,6 +8,7 @@ vi.mock('next/image', () => ({
   // eslint-disable-next-line @next/next/no-img-element
   default: (props: ComponentProps<'img'> & {
     fill?: boolean
+    fetchPriority?: 'high' | 'low' | 'auto'
     priority?: boolean
   }) => {
     const imgProps = { ...props }
@@ -82,21 +83,25 @@ describe('HomeHero', () => {
     expect(screen.getByRole('heading')).toBeInTheDocument()
   })
 
+  it('loads the active hero image eagerly for LCP', () => {
+    render(<HomeHero />)
+
+    const activeSlide = screen.getByAltText('校园环境')
+
+    expect(activeSlide).toHaveAttribute('loading', 'eager')
+    expect(activeSlide).toHaveAttribute('fetchPriority', 'high')
+    expect(activeSlide).not.toHaveAttribute('priority')
+  })
+
   it('renders manual carousel controls for all slides', () => {
     render(<HomeHero />)
 
     expect(screen.getAllByRole('button')).toHaveLength(3)
   })
 
-  it('pulls only the statistics text upward into the first viewport', () => {
+  it('keeps statistics outside of the hero component', () => {
     const { container } = render(<HomeHero />)
 
-    const stats = container.querySelector('[data-home-hero="stats"]')
-    const statsGrid = container.querySelector('[data-home-hero="stats-grid"]')
-
-    expect(stats).toBeInTheDocument()
-    expect(stats?.className).not.toMatch(/-mt-/)
-    expect(statsGrid).toBeInTheDocument()
-    expect(statsGrid?.className).toMatch(/-mt-/)
+    expect(container.querySelector('[data-home-hero="stats"]')).not.toBeInTheDocument()
   })
 })

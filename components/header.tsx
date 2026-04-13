@@ -39,6 +39,7 @@ export default function Header() {
                 alt="信息工程系标识"
                 width={1855}
                 height={576}
+                fetchPriority="high"
                 loading="eager"
                 sizes="(max-width: 640px) 248px, (max-width: 1024px) 320px, 400px"
                 className="h-[4.5rem] w-auto object-contain sm:h-[5.2rem] lg:h-[6rem] xl:h-[6.6rem]"

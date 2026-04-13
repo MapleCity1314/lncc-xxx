@@ -1,8 +1,8 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { AnimatePresence, motion, useInView, useSpring, useTransform } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { withBasePath } from '@/app/(frontend)/_lib/base-path'
 
 const heroEase: [number, number, number, number] = [0.21, 1, 0.36, 1]
@@ -12,20 +12,6 @@ const slides = [
   { src: '/image/banner/home-banner-2.jpg', alt: '实训中心' },
   { src: '/image/banner/home-banner-3.jpg', alt: '学生活动' },
 ]
-
-// 数字滚动组件：让底部的统计数据动起来
-function Counter({ value, suffix = "" }: { value: number; suffix?: string }) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true })
-  const spring = useSpring(0, { mass: 1, stiffness: 50, damping: 20 })
-  const display = useTransform(spring, (current) => Math.round(current).toLocaleString() + suffix)
-
-  useEffect(() => {
-    if (isInView) spring.set(value)
-  }, [isInView, spring, value])
-
-  return <motion.span ref={ref}>{display}</motion.span>
-}
 
 export default function HomeHero() {
   const [activeIndex, setActiveIndex] = useState(0)
@@ -69,9 +55,9 @@ export default function HomeHero() {
               src={withBasePath(slides[activeIndex].src)}
               alt={slides[activeIndex].alt}
               fill
-              priority={activeIndex === 0}
+              fetchPriority="high"
               sizes="100vw"
-              loading={activeIndex === 0 ? 'eager' : 'lazy'}
+              loading="eager"
               className="object-cover"
             />
             {/* 更加细腻的渐变，确保文字可读性 */}
@@ -141,38 +127,6 @@ export default function HomeHero() {
             ))}
           </motion.div>
         </motion.div>
-      </div>
-
-      {/* 2. 下半部分：白色背景统计区 */}
-      <div data-home-hero="stats" className="relative z-20 bg-white py-24">
-        <div className="mx-auto max-w-7xl px-8">
-          <div data-home-hero="stats-grid" className="-mt-16 grid grid-cols-1 gap-16 md:grid-cols-3">
-            <div className="group text-center">
-              <div className="text-5xl font-bold text-slate-900 transition-colors group-hover:text-sky-600">
-                <Counter value={40} suffix="+" />
-              </div>
-              <p className="mt-4 text-lg font-medium text-slate-500 tracking-widest uppercase">载办学沉淀</p>
-              <div className="mx-auto mt-4 h-1 w-8 bg-slate-100 transition-all group-hover:w-16 group-hover:bg-sky-500" />
-            </div>
-
-            <div className="group text-center">
-              <div className="text-5xl font-bold text-slate-900 transition-colors group-hover:text-sky-600">
-                <Counter value={100} suffix="%" />
-              </div>
-              <p className="mt-4 text-lg font-medium text-slate-500 tracking-widest uppercase">实训覆盖率</p>
-              <div className="mx-auto mt-4 h-1 w-8 bg-slate-100 transition-all group-hover:w-16 group-hover:bg-sky-500" />
-            </div>
-
-            <div className="group text-center">
-              <div className="text-5xl font-bold text-slate-900 transition-colors group-hover:text-sky-600">
-                <span className="text-3xl mr-1">TOP</span>
-                <Counter value={10} />
-              </div>
-              <p className="mt-4 text-lg font-medium text-slate-500 tracking-widest uppercase">省内专业排名</p>
-              <div className="mx-auto mt-4 h-1 w-8 bg-slate-100 transition-all group-hover:w-16 group-hover:bg-sky-500" />
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   )
