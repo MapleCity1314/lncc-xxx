@@ -1,5 +1,6 @@
 import { fileURLToPath } from 'node:url'
 import type { NextConfig } from 'next'
+import createMDX from '@next/mdx'
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH
 
@@ -13,10 +14,15 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  pageExtensions: ['mdx', 'md', 'tsx', 'ts', 'jsx', 'js'],
 }
 
 if (basePath) {
   nextConfig.basePath = basePath
 }
 
-export default nextConfig
+const withMDX = createMDX({
+  extension: /\.mdx?$/,
+})
+
+export default withMDX(nextConfig)

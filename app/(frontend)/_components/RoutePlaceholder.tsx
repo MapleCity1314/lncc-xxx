@@ -14,7 +14,7 @@ type Props = {
   sampleLinks?: readonly SampleLink[]
 }
 
-export default function RoutePlaceholder({
+export function RoutePlaceholderContent({
   title,
   routePath,
   summary,
@@ -22,18 +22,14 @@ export default function RoutePlaceholder({
   sampleLinks = [],
 }: Props) {
   return (
-    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-6 py-12 md:px-10">
+    <div className="space-y-8">
       <header className="space-y-4">
         <p className="text-sm font-medium uppercase tracking-[0.2em] text-zinc-500">
           Route Scaffold
         </p>
         <div className="space-y-2">
-          <h1 className="text-balance text-3xl font-semibold text-zinc-950">
-            {title}
-          </h1>
-          <p className="max-w-3xl text-pretty text-base leading-7 text-zinc-600">
-            {summary}
-          </p>
+          <h1 className="text-balance text-3xl font-semibold text-zinc-950">{title}</h1>
+          <p className="max-w-3xl text-pretty text-base leading-7 text-zinc-600">{summary}</p>
         </div>
       </header>
 
@@ -61,13 +57,9 @@ export default function RoutePlaceholder({
                   href={link.href}
                   className="block rounded-2xl border border-zinc-200 px-5 py-4 transition-colors hover:border-zinc-300 hover:bg-zinc-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-950"
                 >
-                  <span className="block text-sm font-medium text-zinc-950">
-                    {link.label}
-                  </span>
+                  <span className="block text-sm font-medium text-zinc-950">{link.label}</span>
                   {link.description ? (
-                    <span className="mt-1 block text-sm leading-6 text-zinc-600">
-                      {link.description}
-                    </span>
+                    <span className="mt-1 block text-sm leading-6 text-zinc-600">{link.description}</span>
                   ) : null}
                 </Link>
               </li>
@@ -75,6 +67,14 @@ export default function RoutePlaceholder({
           </ul>
         </section>
       ) : null}
+    </div>
+  )
+}
+
+export default function RoutePlaceholder(props: Props) {
+  return (
+    <main className="mx-auto flex w-full max-w-5xl flex-1 flex-col gap-8 px-6 py-12 md:px-10">
+      <RoutePlaceholderContent {...props} />
     </main>
   )
 }

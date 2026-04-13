@@ -28,25 +28,19 @@ type Props = {
   title: string
 }
 
-export default function SectionLandingPage({
+export function SectionLandingPageContent({
   title,
   description,
   links,
   sections,
 }: Props) {
   return (
-    <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-6 py-12 md:px-10">
+    <div className="space-y-10">
       <header className="space-y-4">
-        <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">
-          Section Overview
-        </p>
+        <p className="text-sm font-medium uppercase tracking-[0.2em] text-slate-500">Section Overview</p>
         <div className="space-y-3">
-          <h1 className="text-balance text-3xl font-semibold text-slate-950 md:text-4xl">
-            {title}
-          </h1>
-          <p className="max-w-3xl text-pretty text-base leading-7 text-slate-600">
-            {description}
-          </p>
+          <h1 className="text-balance text-3xl font-semibold text-slate-950 md:text-4xl">{title}</h1>
+          <p className="max-w-3xl text-pretty text-base leading-7 text-slate-600">{description}</p>
         </div>
       </header>
 
@@ -79,9 +73,7 @@ export default function SectionLandingPage({
                 <h2 id={section.id} className="text-2xl font-semibold text-slate-950">
                   {section.title}
                 </h2>
-                <p className="max-w-3xl text-sm leading-7 text-slate-600">
-                  {section.description}
-                </p>
+                <p className="max-w-3xl text-sm leading-7 text-slate-600">{section.description}</p>
               </div>
               <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
                 {section.items.length} 条
@@ -125,6 +117,14 @@ export default function SectionLandingPage({
           </section>
         ))}
       </div>
+    </div>
+  )
+}
+
+export default function SectionLandingPage(props: Props) {
+  return (
+    <main className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-10 px-6 py-12 md:px-10">
+      <SectionLandingPageContent {...props} />
     </main>
   )
 }

@@ -115,7 +115,7 @@ describe('HeaderNav', () => {
 
     expect(screen.getByRole('link', { name: '计算机网络技术' })).toHaveAttribute(
       'href',
-      '/majors/zysz-jsjwljs-htm',
+      '/majors/specializations/zysz-jsjwljs-htm',
     )
     expect(screen.getByRole('link', { name: '组织机构' })).toHaveAttribute(
       'href',

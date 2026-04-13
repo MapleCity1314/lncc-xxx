@@ -117,3 +117,31 @@ export const employmentData: ArticleItem[] = [
     href: '/employment/3',
   },
 ]
+
+export interface QuickLink {
+  title: string
+  href: string
+}
+
+export const quickLinks: QuickLink[] = [
+  {
+    title: '学校主页',
+    href: 'https://www.lncc.edu.cn/',
+  },
+  {
+    title: '系主任邮箱',
+    href: 'mailto:jinlei@lncc.edu.cn',
+  },
+  {
+    title: '招生咨询',
+    href: 'https://work.weixin.qq.com/kfid/kfc9e4c15629b41719f',
+  },
+  {
+    title: '就业咨询',
+    href: 'https://work.weixin.qq.com/kfid/kfcb14e6aeeab797f25?service=https%3A%2F%2Fjy.ncss.cn%2Fcaslogin.html',
+  },
+  {
+    title: '访企拓岗',
+    href: 'https://login.chsi.com.cn/passport/login?service=https%3A%2F%2Fjy.ncss.cn%2Fcaslogin.html',
+  },
+]
