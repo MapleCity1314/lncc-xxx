@@ -101,7 +101,7 @@ export default function HomeHero() {
             variants={itemVariants}
             className="mt-6 max-w-2xl text-xl md:text-2xl font-light text-slate-200 leading-relaxed border-l-2 border-sky-500/50 pl-6"
           >
-            辽宁省交通高等专科学校 —— 构建理论与实践并重的人才培养体系，培养高素质技术技能人才。
+            辽宁省交通高等专科学校信息工程系 —— 构建理论与实践并重的人才培养体系，培养高素质技术技能人才。
           </motion.p>
 
           {/* 控制条 */}

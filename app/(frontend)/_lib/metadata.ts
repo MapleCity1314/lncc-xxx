@@ -9,7 +9,7 @@ const SITE_BASE_URL = new URL('https://www.lncc.edu.cn/xxx/')
 const DEFAULT_IMAGE_PATH = '/image/banner/home-banner-1.jpg'
 const TWITTER_HANDLE = '@lncc_info'
 const TITLE_SUFFIX = 'LNCC'
-const HOME_PAGE_TITLE = '首页标题'
+const HOME_PAGE_TITLE = '首页'
 
 type SectionRoute = keyof typeof pageContent
 export type DetailSection = 'news' | 'majors'

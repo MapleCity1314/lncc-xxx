@@ -13,22 +13,22 @@ const boardEase: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const sectionReveal: Variants = {
   hidden: { opacity: 0, y: 44 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.72, ease: boardEase } },
+  visible: { opacity: 1, y: 0, transition: { duration: 1.1, ease: boardEase } },
 }
 
 const listReveal: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.08 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.14, delayChildren: 0.12 } },
 }
 
 const employmentReveal: Variants = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.08 } },
+  visible: { opacity: 1, transition: { staggerChildren: 0.18, delayChildren: 0.12 } },
 }
 
 const itemReveal: Variants = {
   hidden: { opacity: 0, y: 18 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.48, ease: boardEase } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.72, ease: boardEase } },
 }
 
 type HomeBoardProps = {
