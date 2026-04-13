@@ -1,14 +1,20 @@
 import SubPageLayout from '@/components/SubPageLayout'
-import { RoutePlaceholderContent } from '@/app/(frontend)/_components/RoutePlaceholder'
+import AboutContent from '@/components/AboutContent'
+import { aboutOverview } from '@/data/aboutOverview'
 import { getSectionLayout } from '@/app/(frontend)/_lib/section-layouts'
-import { pageContent } from '@/app/(frontend)/_lib/route-placeholders'
-import { getSectionMetadata } from '@/app/(frontend)/_lib/metadata'
+import { getContentEntryMetadata } from '@/app/(frontend)/_lib/metadata'
 
 const SECTION_KEY = 'about'
 const SECTION_PATH = '/about'
 
 export function generateMetadata() {
-  return getSectionMetadata('about')
+  return getContentEntryMetadata({
+    title: `${aboutOverview.title}`,
+    description: aboutOverview.description,
+    path: SECTION_PATH,
+    sectionLabel: aboutOverview.title,
+    publishedAt: aboutOverview.publishedAt,
+  })
 }
 
 export default function AboutPage() {
@@ -25,7 +31,11 @@ export default function AboutPage() {
       breadcrumbs={layout.breadcrumbs}
       hideSidebar
     >
-      <RoutePlaceholderContent {...pageContent.about} />
+      <AboutContent
+        title={aboutOverview.title}
+        publishedAt={aboutOverview.publishedAt}
+        paragraphs={aboutOverview.paragraphs}
+      />
     </SubPageLayout>
   )
 }
