@@ -15,7 +15,6 @@ import militaryTraining from '@/mock/military/training'
 import partnersCompanies from '@/mock/partners/companies'
 import partnersUpdates from '@/mock/partners/updates'
 import researchAwards from '@/mock/research/awards'
-import researchLanding from '@/mock/research/landing'
 import researchPapers from '@/mock/research/papers'
 import researchProjects from '@/mock/research/researchProjects'
 import researchTeachingProjects from '@/mock/research/teachingProjects'
@@ -144,10 +143,10 @@ export const teachersSection = sectionContent({
 
 export const researchSection = sectionContent({
   slug: 'research',
-  title: researchLanding.section,
-  subtitle: 'RESEARCH & TEACHING',
-  sidebarTitle: researchLanding.section,
-  sidebarSubtitle: 'Research & Teaching',
+  title: '教研科研',
+  subtitle: 'TEACHING & RESEARCH',
+  sidebarTitle: '教研科研',
+  sidebarSubtitle: 'Teaching & Research',
   categories: [
     pageCategory('teaching-projects', researchTeachingProjects),
     pageCategory('research-projects', researchProjects),

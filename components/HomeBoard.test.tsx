@@ -104,7 +104,7 @@ describe('HomeBoard', () => {
     expect(
       screen.getByText('访企拓岗架金桥 产教融合促就业——信息工程系赴沈阳国际软件园专项走访纪实'),
     ).toBeInTheDocument()
-    expect(screen.getByText(/精准对接行业人才需求/)).toBeInTheDocument()
+    expect(screen.getByText(/校企联合访企拓岗/)).toBeInTheDocument()
     expect(
       within(screen.getByRole('region', { name: '通知公告' })).getByRole('link', {
         name: /查看更多公告/,
@@ -114,6 +114,19 @@ describe('HomeBoard', () => {
       'href',
       '/employment',
     )
+  })
+
+  it('routes every homepage content entry to a real detail page instead of placeholders', () => {
+    render(<HomeBoard employmentData={employmentData} newsData={newsData} partyData={partyData} />)
+
+    for (const href of [
+      ...partyData.map((item) => item.href),
+      ...newsData.map((item) => item.href),
+      ...employmentData.map((item) => item.href),
+    ]) {
+      expect(href).toMatch(/^\/(party|news|employment)\//)
+      expect(href).not.toContain('#')
+    }
   })
 
   it('uses a more noticeable but restrained scroll reveal', () => {

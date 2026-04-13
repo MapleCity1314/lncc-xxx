@@ -1,38 +1,76 @@
-import { buildSpecializationMenu } from '@/app/(frontend)/_lib/content'
+import { notFound } from 'next/navigation'
+import ContentDetail from '@/components/ContentDetail'
+import MajorSectionList from '@/components/MajorSectionList'
 import SubPageLayout from '@/components/SubPageLayout'
-import SectionCategoryGrid from '@/components/SectionCategoryGrid'
+import {
+  buildSpecializationMenu,
+  getSpecializationLandingPath,
+  resolveSectionPath,
+} from '@/app/(frontend)/_lib/content'
 import { majorsSection } from '@/data/content'
-import { getSectionMetadata } from '@/app/(frontend)/_lib/metadata'
+import { getContentEntryMetadata, getSectionMetadata } from '@/app/(frontend)/_lib/metadata'
 
 export function generateMetadata() {
-  return getSectionMetadata('majors')
+  const landingPath = getSpecializationLandingPath(majorsSection)
+  if (!landingPath) {
+    return getSectionMetadata('majors')
+  }
+
+  const segments = landingPath.replace(/^\/majors\//, '').split('/')
+  const resolved = resolveSectionPath(majorsSection, segments)
+  const entry = resolved.entry
+
+  if (!entry) {
+    return getSectionMetadata('majors')
+  }
+
+  return getContentEntryMetadata({
+    title: entry.title,
+    description: entry.summary,
+    path: '/majors',
+    sectionLabel: majorsSection.sidebar.title,
+    publishedAt: entry.publishedAt,
+    imagePath: entry.metadata?.heroImage,
+  })
 }
 
-const SECTION_PATH = '/majors'
-
 export default function MajorsPage() {
-  const menuItems = buildSpecializationMenu(majorsSection, SECTION_PATH)
+  const landingPath = getSpecializationLandingPath(majorsSection)
+  if (!landingPath) {
+    notFound()
+  }
+
+  const segments = landingPath.replace(/^\/majors\//, '').split('/')
+  const resolved = resolveSectionPath(majorsSection, segments)
+  const entry = resolved.entry
+
+  if (!entry?.mdxComponent) {
+    notFound()
+  }
 
   return (
     <SubPageLayout
-      heroTitle={majorsSection.hero.title}
-      heroSubtitle={majorsSection.hero.subtitle}
-      heroImage={majorsSection.hero.image}
+      heroTitle={entry.metadata?.heroTitle ?? majorsSection.hero.title}
+      heroSubtitle={entry.metadata?.heroSubtitle ?? majorsSection.hero.subtitle}
+      heroImage={entry.metadata?.heroImage ?? majorsSection.hero.image}
       sidebarTitle={majorsSection.sidebar.title}
       sidebarSubtitle={majorsSection.sidebar.subtitle}
-      menuItems={menuItems}
-      breadcrumbs={majorsSection.breadcrumbs}
+      menuItems={buildSpecializationMenu(majorsSection, landingPath)}
+      breadcrumbs={[
+        ...majorsSection.breadcrumbs,
+        {
+          label: entry.title,
+        },
+      ]}
     >
       <div className="space-y-10">
-        <div className="mb-12 flex items-center justify-center gap-6">
+        <div className="mb-8 flex items-center justify-center gap-6">
           <div className="h-[1px] w-12 bg-slate-200 sm:w-20" />
-          <h2 className="text-2xl font-normal tracking-widest text-slate-800">
-            {majorsSection.sidebar.title}
-          </h2>
+          <h2 className="text-2xl font-normal tracking-widest text-slate-800">{entry.title}</h2>
           <div className="h-[1px] w-12 bg-slate-200 sm:w-20" />
         </div>
-
-        <SectionCategoryGrid categories={majorsSection.categories} sectionSlug={majorsSection.slug} />
+        <ContentDetail entry={entry} />
+        <MajorSectionList sections={entry.sections} />
       </div>
     </SubPageLayout>
   )
