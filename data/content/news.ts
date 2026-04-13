@@ -8,6 +8,7 @@ const securityEntry: ContentEntry = {
   summary: '多维度安全教育矩阵点亮师生“守护线上线下”的学习路径。',
   publishedAt: '2024-04-10',
   mdxComponent: CampusSecurity,
+  aliasSlugs: [['campus-security-week']],
   metadata: {
     category: '安全教育',
   },
@@ -19,6 +20,7 @@ const corridorEntry: ContentEntry = {
   summary: '图文走廊联动多重互动，是安全教育周的温度面孔。',
   publishedAt: '2024-04-09',
   mdxComponent: SafetyWeek,
+  aliasSlugs: [['safety-corridor-initiative']],
   metadata: {
     category: '安全提醒',
   },

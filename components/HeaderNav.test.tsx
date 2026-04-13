@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+﻿import { render, screen } from '@testing-library/react'
 import type React from 'react'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import headerLinks from '@/components/header-links'
@@ -104,26 +104,29 @@ describe('HeaderNav', () => {
     expect(new Set(hrefs).size).toBe(hrefs.length)
   })
 
-  it('keeps 本系概况 as a direct link without submenu children', () => {
+  it('keeps about as a direct link without submenu children', () => {
     const aboutLink = headerLinks.find((item) => item.href === '/about')
 
     expect(aboutLink?.children).toEqual([])
   })
 
   it('renders desktop submenu links from the shared navigation data', () => {
-    render(<HeaderNav />)
+    pathnameState.value = '/about'
 
-    expect(screen.getByRole('link', { name: '计算机网络技术' })).toHaveAttribute(
-      'href',
-      '/majors/specializations/zysz-jsjwljs-htm',
-    )
+    const { container } = render(<HeaderNav />)
+
+    expect(
+      container.querySelector(
+        'a[href="/majors/specializations/zysz-jsjwljs-htm"]',
+      ),
+    ).not.toBeNull()
     expect(screen.getByRole('link', { name: '组织机构' })).toHaveAttribute(
       'href',
       '/teachers/organization',
     )
     expect(screen.getByRole('link', { name: '校友信息' })).toHaveAttribute(
       'href',
-      '/alumni#alumni-info',
+      '/alumni/alumni-info',
     )
   })
 
@@ -136,33 +139,33 @@ describe('HeaderNav', () => {
     const alumniLink = headerLinks.find((item) => item.href === '/alumni')
 
     expect(researchLink?.children.map((item) => item.href)).toEqual([
-      '/research#teaching-projects',
-      '/research#research-projects',
-      '/research#papers',
-      '/research#books',
-      '/research#awards',
+      '/research/teaching-projects',
+      '/research/research-projects',
+      '/research/papers',
+      '/research/books',
+      '/research/awards',
     ])
     expect(trainingLink?.children.map((item) => item.href)).toEqual([
-      '/training#internal-bases',
-      '/training#external-bases',
+      '/training/internal-bases',
+      '/training/external-bases',
     ])
     expect(policeLink?.children.map((item) => item.href)).toEqual([
-      '/police#admission-training',
-      '/police#daily-study',
-      '/police#daily-drill',
-      '/police#daily-life',
-      '/police#vacation-camp',
-      '/police#policies',
+      '/police/admission-training',
+      '/police/daily-study',
+      '/police/daily-drill',
+      '/police/daily-life',
+      '/police/vacation-camp',
+      '/police/policies',
     ])
     expect(partnersLink?.children.map((item) => item.href)).toEqual([
-      '/partners#companies',
-      '/partners#updates',
+      '/partners/companies',
+      '/partners/updates',
     ])
     expect(enrollmentLink?.children.map((item) => item.href)).toEqual([
       'https://www.lncc.edu.cn/xsc/',
-      '/enrollment#employment-services',
+      '/enrollment/employment-services',
       'http://www.lncc.edu.cn/xsjy/',
-      '/enrollment#enterprise-visits',
+      '/enrollment/enterprise-visits',
     ])
     expect(enrollmentLink?.children.map((item) => item.isExternal)).toEqual([
       true,
@@ -171,13 +174,15 @@ describe('HeaderNav', () => {
       undefined,
     ])
     expect(alumniLink?.children.map((item) => item.href)).toEqual([
-      '/alumni#profiles',
-      '/alumni#return-services',
-      '/alumni#alumni-info',
+      '/alumni/profiles',
+      '/alumni/return-services',
+      '/alumni/alumni-info',
     ])
   })
 
   it('keeps submenu hidden until the root navigation group is hovered or focused', () => {
+    pathnameState.value = '/about'
+
     const { container } = render(<HeaderNav />)
 
     const rootLink = Array.from(
@@ -196,3 +201,4 @@ describe('HeaderNav', () => {
     expect(submenuSurface?.className).toContain('bg-white/95')
   })
 })
+

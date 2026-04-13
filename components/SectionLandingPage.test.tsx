@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+﻿import { render, screen } from '@testing-library/react'
 import type React from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import AlumniPage from '@/app/(frontend)/alumni/page'
@@ -22,71 +22,52 @@ vi.mock('next/link', () => ({
   ),
 }))
 
-describe('section landing pages', () => {
-  it('renders research anchors for each submenu section', () => {
+function expectHref(href: string) {
+  const links = screen.getAllByRole('link')
+
+  expect(links.some((link) => link.getAttribute('href') === href)).toBe(true)
+}
+
+describe('section tree pages', () => {
+  it('renders research category routes for each submenu section', () => {
     render(<ResearchPage />)
 
-    expect(screen.getByRole('link', { name: '教研项目' })).toHaveAttribute(
-      'href',
-      '#teaching-projects',
-    )
-    expect(screen.getByRole('heading', { name: '成果获奖' })).toHaveAttribute('id', 'awards')
+    expectHref('/research/teaching-projects')
+    expectHref('/research/awards')
   })
 
-  it('renders training anchors for internal and external bases', () => {
+  it('renders training category routes for internal and external bases', () => {
     render(<TrainingPage />)
 
-    expect(screen.getByRole('link', { name: '校内实训基地' })).toHaveAttribute(
-      'href',
-      '#internal-bases',
-    )
-    expect(screen.getByRole('heading', { name: '校外实训基地' })).toHaveAttribute(
-      'id',
-      'external-bases',
-    )
+    expectHref('/training/internal-bases')
+    expectHref('/training/external-bases')
   })
 
-  it('renders police anchors for the six lifecycle sections', () => {
+  it('renders police category routes for the six lifecycle sections', () => {
     render(<PolicePage />)
 
-    expect(screen.getByRole('link', { name: '入学军训' })).toHaveAttribute(
-      'href',
-      '#admission-training',
-    )
-    expect(screen.getByRole('heading', { name: '相关政策' })).toHaveAttribute('id', 'policies')
+    expectHref('/police/admission-training')
+    expectHref('/police/policies')
   })
 
-  it('renders partner anchors for companies and updates', () => {
+  it('renders partner category routes for companies and updates', () => {
     render(<PartnersPage />)
 
-    expect(screen.getByRole('link', { name: '合作企业' })).toHaveAttribute('href', '#companies')
-    expect(screen.getByRole('heading', { name: '合作动态' })).toHaveAttribute('id', 'updates')
+    expectHref('/partners/companies')
+    expectHref('/partners/updates')
   })
 
-  it('renders enrollment actions with external admissions and job links', () => {
+  it('renders enrollment directory routes before external admissions and job links', () => {
     render(<EnrollmentPage />)
 
-    expect(screen.getByRole('link', { name: '招生信息' })).toHaveAttribute(
-      'href',
-      'https://www.lncc.edu.cn/xsc/',
-    )
-    expect(screen.getByRole('link', { name: '招聘信息' })).toHaveAttribute(
-      'href',
-      'http://www.lncc.edu.cn/xsjy/',
-    )
-    expect(screen.getByRole('heading', { name: '就业服务' })).toHaveAttribute(
-      'id',
-      'employment-services',
-    )
+    expectHref('/enrollment/admissions')
+    expectHref('/enrollment/job-links')
   })
 
-  it('renders alumni anchors for profiles, services, and alumni info', () => {
+  it('renders alumni category routes for profiles, services, and alumni info', () => {
     render(<AlumniPage />)
 
-    expect(screen.getByRole('link', { name: '校友风采' })).toHaveAttribute('href', '#profiles')
-    expect(screen.getByRole('heading', { name: '校友信息' })).toHaveAttribute(
-      'id',
-      'alumni-info',
-    )
+    expectHref('/alumni/profiles')
+    expectHref('/alumni/alumni-info')
   })
 })

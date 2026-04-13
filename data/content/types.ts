@@ -40,7 +40,9 @@ export type ContentEntry = {
   title: string
   summary: string
   publishedAt: string
-  mdxComponent: MarkdownComponent
+  mdxComponent?: MarkdownComponent
+  href?: string
+  isExternal?: boolean
   metadata?: ContentEntryMetadata
   categorySlug?: string
   aliasSlugs?: string[][]

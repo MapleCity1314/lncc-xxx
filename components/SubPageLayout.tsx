@@ -69,9 +69,9 @@ export default function SubPageLayout({
 
             <div className="flex flex-col bg-slate-900 pb-6 shadow-xl">
               <div className="flex flex-col items-center justify-center border-b border-white/10 px-6 py-8 text-center">
-                <h2 className="text-2xl font-bold tracking-widest text-white">{sidebarTitle}</h2>
+                <h2 className="w-full text-center text-2xl font-bold tracking-normal text-white">{sidebarTitle}</h2>
                 {sidebarSubtitle && (
-                  <span className="mt-1 text-xs text-slate-400 uppercase tracking-widest">{sidebarSubtitle}</span>
+                  <span className="mt-1 block w-full text-center text-xs tracking-widest text-slate-400 uppercase">{sidebarSubtitle}</span>
                 )}
               </div>
 

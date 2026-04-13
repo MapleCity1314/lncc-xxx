@@ -36,7 +36,7 @@ export function generateMetadata({ params }: MajorPathProps) {
 }
 
 export function generateStaticParams() {
-  return getSectionStaticParams('majors')
+  return getSectionStaticParams(majorsSection)
 }
 
 type MajorPathProps = {

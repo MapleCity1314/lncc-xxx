@@ -7,6 +7,10 @@ type ContentDetailProps = {
 export default function ContentDetail({ entry }: ContentDetailProps) {
   const Body = entry.mdxComponent
 
+  if (!Body) {
+    return null
+  }
+
   return (
     <section className="space-y-6 rounded-2xl border border-slate-200 bg-white p-6">
       <header>

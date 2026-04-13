@@ -12,16 +12,14 @@ export default function SectionEntryList({ entries, sectionSlug, baseSegments }:
     <div className="space-y-6">
       {entries.map((entry) => {
         const href = `/${sectionSlug}/${[...baseSegments, entry.slug].join('/')}`
+        const targetHref = entry.mdxComponent ? href : entry.href
+        const isExternal = entry.isExternal || targetHref?.startsWith('http')
 
-        return (
-          <Link
-            key={entry.slug}
-            href={href}
-            className="group flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-6 transition hover:border-sky-400 hover:shadow-xl"
-          >
-            <div className="flex items-center justify-between">
+        const content = (
+          <>
+            <div className="flex items-center justify-between gap-4">
               <h3 className="text-2xl font-semibold text-slate-900">{entry.title}</h3>
-              <time className="text-sm text-slate-500">{entry.publishedAt}</time>
+              <time className="shrink-0 text-sm text-slate-500">{entry.publishedAt}</time>
             </div>
             <p className="text-base leading-7 text-slate-600">{entry.summary}</p>
             {entry.metadata && entry.metadata.category && (
@@ -29,6 +27,29 @@ export default function SectionEntryList({ entries, sectionSlug, baseSegments }:
                 {entry.metadata.category}
               </span>
             )}
+          </>
+        )
+
+        if (!targetHref) {
+          return (
+            <article
+              key={entry.slug}
+              className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-6"
+            >
+              {content}
+            </article>
+          )
+        }
+
+        return (
+          <Link
+            key={entry.slug}
+            href={targetHref}
+            target={isExternal ? '_blank' : undefined}
+            rel={isExternal ? 'noreferrer noopener' : undefined}
+            className="group flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-6 transition hover:border-sky-400 hover:shadow-xl"
+          >
+            {content}
           </Link>
         )
       })}

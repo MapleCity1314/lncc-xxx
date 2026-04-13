@@ -1,13 +1,8 @@
 import type { BreadcrumbLink } from '@/data/content/types'
-import { contentSections } from '@/data/content'
 import type { ContentCategory, ContentEntry, SectionContent } from '@/data/content/types'
 import type { SubPageMenuItem } from '@/components/SubPageLayout'
 
 export type MenuItemWithActive = (SectionContent['menu'][number] & { isActive?: boolean })
-
-export function getSectionBySlug(slug: string): SectionContent | undefined {
-  return contentSections[slug]
-}
 
 export function buildMenuWithState(section: SectionContent, currentPath: string): MenuItemWithActive[] {
   return section.menu.map((item) => ({
@@ -38,7 +33,7 @@ export function buildSpecializationMenu(
 
   return items.map((item) => ({
     ...item,
-    isActive: currentPath === item.href,
+    isActive: currentPath !== `/${section.slug}` && currentPath === item.href,
   }))
 }
 
@@ -48,6 +43,25 @@ function isMenuItemActive(href: string, currentPath: string) {
   }
 
   return currentPath.startsWith(`${href}/`)
+}
+
+export function buildSiblingMenu(section: SectionContent, segments: string[]): SubPageMenuItem[] {
+  const activePath = `/${section.slug}/${segments.join('/')}`
+  const parentTrail = findParentCategoryTrail(section.categories, segments)
+  const siblings = parentTrail.length === 0
+    ? section.categories
+    : parentTrail.at(-1)?.children ?? section.categories
+  const baseSegments = parentTrail.map((node) => node.slug)
+
+  return siblings.map((node) => {
+    const href = `/${section.slug}/${[...baseSegments, node.slug].join('/')}`
+
+    return {
+      label: node.title,
+      href,
+      isActive: activePath === href || activePath.startsWith(`${href}/`),
+    }
+  })
 }
 
 export type ResolvedSectionPath = {
@@ -94,15 +108,12 @@ export function resolveSectionPath(section: SectionContent, segments: string[]):
   }
 
   if (!entry && segments.length === 1) {
-    const directEntry = findEntryBySlug(section.slug, segments[0])
+    const directEntry = findEntryBySlug(section, segments[0])
     if (directEntry) {
-      const trail = directEntry.categorySlug
-        ? findCategoryTrail(section.categories, directEntry.categorySlug) ?? []
-        : []
       return {
-        currentNode: trail.at(-1) ?? currentNode,
-        entry: directEntry,
-        trail,
+        currentNode: directEntry.category ?? currentNode,
+        entry: directEntry.entry,
+        trail: directEntry.trail,
         leftoverSegments: [],
       }
     }
@@ -143,12 +154,7 @@ export function buildBreadcrumbs(
   return breadcrumbs
 }
 
-export function getSectionStaticParams(sectionSlug: string) {
-  const section = getSectionBySlug(sectionSlug)
-  if (!section) {
-    return []
-  }
-
+export function getAllSectionStaticParams(section: SectionContent) {
   const params: { slug: string[] }[] = []
 
   function walk(node: ContentCategory, ancestors: string[]) {
@@ -161,7 +167,9 @@ export function getSectionStaticParams(sectionSlug: string) {
 
     if (node.entries) {
       node.entries.forEach((entry) => {
-        params.push({ slug: [...currentPath, entry.slug] })
+        if (entry.mdxComponent) {
+          params.push({ slug: [...currentPath, entry.slug] })
+        }
         if (entry.aliasSlugs) {
           entry.aliasSlugs.forEach((alias) => {
             params.push({ slug: alias })
@@ -175,12 +183,9 @@ export function getSectionStaticParams(sectionSlug: string) {
   return params
 }
 
-export function flattenEntries(sectionSlug: string): ContentEntry[] {
-  const section = getSectionBySlug(sectionSlug)
-  if (!section) {
-    return []
-  }
+export const getSectionStaticParams = getAllSectionStaticParams
 
+export function flattenEntries(section: SectionContent): ContentEntry[] {
   const entries: ContentEntry[] = []
 
   function walk(node: ContentCategory) {
@@ -195,9 +200,8 @@ export function flattenEntries(sectionSlug: string): ContentEntry[] {
   return entries
 }
 
-export function findEntryBySlug(sectionSlug: string, slug: string) {
-  const entries = flattenEntries(sectionSlug)
-  return entries.find((entry) => entry.slug === slug)
+export function findEntryBySlug(section: SectionContent, slug: string): EntryMatch | undefined {
+  return findEntryInTree(section.categories, (entry) => entry.slug === slug)
 }
 
 type EntryMatch = {
@@ -212,7 +216,7 @@ function findEntryBySegments(section: SectionContent, segments: string[]): Entry
   }
 
   const key = segments.join('/')
-  const entries = flattenEntries(section.slug)
+  const entries = flattenEntries(section)
 
   for (const entry of entries) {
     if (entry.aliasSlugs?.some((alias) => alias.join('/') === key)) {
@@ -228,6 +232,58 @@ function findEntryBySegments(section: SectionContent, segments: string[]): Entry
   }
 
   return undefined
+}
+
+function findEntryInTree(
+  categories: ContentCategory[],
+  predicate: (entry: ContentEntry) => boolean,
+  accumulated: ContentCategory[] = [],
+): EntryMatch | undefined {
+  for (const category of categories) {
+    const trail = [...accumulated, category]
+    const entry = category.entries?.find(predicate)
+    if (entry) {
+      return {
+        entry,
+        category,
+        trail,
+      }
+    }
+
+    const childMatch = category.children
+      ? findEntryInTree(category.children, predicate, trail)
+      : undefined
+    if (childMatch) {
+      return childMatch
+    }
+  }
+
+  return undefined
+}
+
+function findParentCategoryTrail(
+  categories: ContentCategory[],
+  segments: string[],
+): ContentCategory[] {
+  if (segments.length <= 1) {
+    return []
+  }
+
+  const parentSegments = segments.slice(0, -1)
+  const parentTrail: ContentCategory[] = []
+  let currentNodes = categories
+
+  for (const segment of parentSegments) {
+    const next = currentNodes.find((node) => node.slug === segment)
+    if (!next) {
+      return []
+    }
+
+    parentTrail.push(next)
+    currentNodes = next.children ?? []
+  }
+
+  return parentTrail
 }
 
 function findCategoryTrail(
